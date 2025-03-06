@@ -4,7 +4,7 @@ A simple extension to add links to your new tab page
 
 ## Configuration
 
-Go to the extension options, you will be presented with an input field for a JSON config/
+Go to the extension options, you will be presented with an input field for a JSON config.
 Example config:
 ```
 {
