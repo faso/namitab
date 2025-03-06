@@ -1,0 +1,16 @@
+Privacy Policy
+
+Data Collection and Usage
+This extension does not collect, process, or transmit any personal information to any external servers. Any settings or data you create or modify within this extension are stored locally on your own computer (or within Chrome’s built-in storage). No information is shared with third parties.
+
+Local Storage
+All user preferences are saved either in Chrome’s local storage. This storage is only accessible by the user and by this extension. The extension does not have access to any other data on your device or in your browser.
+
+Third-Party Services
+This extension does not integrate with, nor send data to, any external analytics or advertising networks.
+
+User Consent
+By installing or using this extension, you agree that the extension may store data on your device solely for the purpose of providing its functionality.
+
+Changes to this Policy
+If any changes are made to this policy, an updated version will be published in the extension’s listing.
