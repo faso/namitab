@@ -1,34 +1,21 @@
-const colors = {
-    background: "#1F1F28",
-    black: "#090618",
-    blue: "#7E9CD8",
-    brightBlack: "#727169",
-    brightBlue: "#7FB4CA",
-    brightCyan: "#7AA89F",
-    brightGreen: "#98BB6C",
-    brightPurple: "#938AA9",
-    brightRed: "#E82424",
-    brightWhite: "#DCD7BA",
-    brightYellow: "#E6C384",
-    cursorColor: "#C8C093",
-    cyan: "#6A9589",
-    foreground: "#EEEBD9",
-    green: "#8BAE7D",
-    purple: "#957FB8",
-    red: "#C34043",
-    selectionBackground: "#2D4F67",
-    white: "#C8C093",
-    yellow: "#D4BA88",
-};
+let colors = {};
 
 document.addEventListener("DOMContentLoaded", () => {
     const settingsBtn = document.getElementById("settingsBtn");
     settingsBtn.addEventListener("click", () => {
-        // Open the extension’s options page
         chrome.runtime.openOptionsPage();
     });
 
     chrome.storage.local.get(["settings"], (result) => {
+        let r = document.querySelector(":root");
+        let colorObject = JSON.parse(result.settings.colors);
+        for (const name in colorObject) {
+            const color = colorObject[name];
+            console.log(name);
+            console.log(color);
+            r.style.setProperty(`--${name}`, color);
+        }
+
         let config = {};
         if (!result.settings.config) {
             config = {
@@ -79,6 +66,8 @@ document.addEventListener("DOMContentLoaded", () => {
         container.style.marginTop = `${result.settings.margins.top}%`;
         container.style.marginRight = `${result.settings.margins.right}%`;
         container.style.marginLeft = `${result.settings.margins.left}%`;
+
+        colors = JSON.parse(result.settings.colors);
 
         for (const columnConfig of config.columns) {
             console.log(columnConfig);
