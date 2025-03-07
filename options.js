@@ -40,16 +40,38 @@ const example = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    chrome.storage.local.get(["config"], (result) => {
+    chrome.storage.local.get(["settings"], (result) => {
         document.getElementById("config").value =
-            result.config || JSON.stringify(example);
+            result.settings.config || JSON.stringify(example);
+
+        document.getElementById("marginTop").value =
+            result.settings.margins.top || 0;
+        document.getElementById("marginLeft").value =
+            result.settings.margins.left || 0;
+        document.getElementById("marginRight").value =
+            result.settings.margins.right || 0;
     });
 });
 
 document.getElementById("saveBtn").addEventListener("click", () => {
-    const settingValue = document.getElementById("config").value;
+    const configValue = document.getElementById("config").value;
+    const marginTop = document.getElementById("marginTop").value;
+    const marginLeft = document.getElementById("marginLeft").value;
+    const marginRight = document.getElementById("marginRight").value;
 
-    chrome.storage.local.set({ config: settingValue }, () => {
-        console.log("Settings saved!");
-    });
+    chrome.storage.local.set(
+        {
+            settings: {
+                config: configValue,
+                margins: {
+                    top: marginTop,
+                    left: marginLeft,
+                    right: marginRight,
+                },
+            },
+        },
+        () => {
+            console.log("Settings saved!");
+        },
+    );
 });

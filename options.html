@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title>My Extension Settings</title>
+        <title>Nami Tab Settings</title>
         <style>
             :root {
                 --background: #1f1f28;
@@ -33,7 +33,35 @@
                 font-family: sans-serif;
                 background: var(--background);
             }
+            /* Flex container for margin settings */
+            .margin-fields {
+                display: flex;
+                flex-direction: column; /* Keep each margin setting in its own horizontal row */
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
 
+            /* Each row with a label and input side by side */
+            .margin-row {
+                display: flex;
+                align-items: center;
+                gap: 1rem; /* space between label and input */
+            }
+
+            /* Label on the same line as input */
+            .margin-row label {
+                font-weight: 600;
+                white-space: nowrap; /* prevents the label text from wrapping mid-line */
+            }
+
+            /* Number inputs */
+            input[type="number"] {
+                max-width: 80px;
+                font-size: 1rem;
+                padding: 0.4rem;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+            }
             .container {
                 width: 90%;
                 margin: 3rem auto;
@@ -84,6 +112,44 @@
     <body>
         <div class="container">
             <h1>Settings</h1>
+
+            <!-- Flex container for margin inputs -->
+            <div class="margin-fields">
+                <!-- Row for top margin -->
+                <div class="margin-row">
+                    <label for="marginTop">Top Margin (%)</label>
+                    <input
+                        type="number"
+                        id="marginTop"
+                        placeholder="0"
+                        min="0"
+                        max="100"
+                    />
+                </div>
+                <!-- Row for left margin -->
+                <div class="margin-row">
+                    <label for="marginLeft">Left Margin (%)</label>
+                    <input
+                        type="number"
+                        id="marginLeft"
+                        placeholder="0"
+                        min="0"
+                        max="100"
+                    />
+                </div>
+                <!-- Row for right margin -->
+                <div class="margin-row">
+                    <label for="marginRight">Right Margin (%)</label>
+                    <input
+                        type="number"
+                        id="marginRight"
+                        placeholder="0"
+                        min="0"
+                        max="100"
+                    />
+                </div>
+            </div>
+
             <label for="notes">Config</label>
             <textarea id="config" placeholder="Paste your JSON here"></textarea>
             <button id="saveBtn">Save</button>
