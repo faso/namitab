@@ -7,41 +7,18 @@
             textarea {
                 font-family: Consolas, monaco, monospace;
             }
-            :root {
-                --background: #1f1f28;
-                --black: #090618;
-                --blue: #7e9cd8;
-                --brightBlack: #727169;
-                --brightBlue: #7fb4ca;
-                --brightCyan: #7aa89f;
-                --brightGreen: #98bb6c;
-                --brightPurple: #938aa9;
-                --brightRed: #e82424;
-                --brightWhite: #dcd7ba;
-                --brightYellow: #e6c384;
-                --cursorColor: #c8c093;
-                --cyan: #6a9589;
-                --foreground: #eeebd9;
-                --green: #8bae7d;
-                --purple: #957fb8;
-                --red: #c34043;
-                --selectionBackground: #2d4f67;
-                --white: #c8c093;
-                --yellow: #D4BA8;
-            }
-
             /* Button styling */
             #settingsBtn {
                 position: fixed;
                 bottom: 1rem;
                 right: 1rem;
                 padding: 0.75rem 1.5rem;
-                color: var(--foreground);
+                color: var(--settingsButton);
                 font-size: 1rem;
                 cursor: pointer;
             }
             #settingsBtn:hover {
-                color: var(--blue);
+                color: var(--settingsButtonHover);
             }
             #container {
                 display: flex !important;
@@ -75,7 +52,7 @@
                 text-decoration: none;
                 padding: 2px 0;
                 font-size: 13pt;
-                color: var(--brightWhite);
+                color: var(--link);
             }
 
             .nf {
@@ -94,7 +71,7 @@
             }
 
             h2 {
-                color: var(--brightWhite);
+                color: var(--sectionName);
                 font-size: 16pt;
                 height: 4.5rem;
                 line-height: 4.5rem;
