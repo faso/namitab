@@ -1,0 +1,53 @@
+name: Package Chrome extension zip
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. Check out the repository
+      - name: Check out repository
+        uses: actions/checkout@v3
+
+      # 2. Zip the files/folders you want to bundle
+      - name: Zip selected files
+        run: |
+          zip -r namitab.zip \
+            16x16.png \
+            32x32.png \
+            48x48.png \
+            128x128.png \
+            manifest.json \
+            newtab.html \
+            newtab.js \
+            options.html \
+            options.js
+
+      # 3. Create a release
+      - name: Create GitHub Release
+        id: create_release
+        uses: actions/create-release@v1
+        with:
+          # Creates a unique tag for the commit
+          tag_name: build-${{ github.run_id }}
+          release_name: "Release for commit ${{ github.sha }}"
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # 4. Upload the zipped artifact to the release
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./my-files.zip
+          asset_name: my-files.zip
+          asset_content_type: application/zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
