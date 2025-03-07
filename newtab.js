@@ -22,9 +22,15 @@ const colors = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-    chrome.storage.local.get(["config"], (result) => {
+    const settingsBtn = document.getElementById("settingsBtn");
+    settingsBtn.addEventListener("click", () => {
+        // Open the extension’s options page
+        chrome.runtime.openOptionsPage();
+    });
+
+    chrome.storage.local.get(["settings"], (result) => {
         let config = {};
-        if (!result.config) {
+        if (!result.settings.config) {
             config = {
                 columns: [
                     {
@@ -65,10 +71,15 @@ document.addEventListener("DOMContentLoaded", () => {
                 ],
             };
         } else {
-            config = JSON.parse(result.config);
+            config = JSON.parse(result.settings.config);
         }
 
         const container = document.getElementById("container");
+
+        container.style.marginTop = `${result.settings.margins.top}%`;
+        container.style.marginRight = `${result.settings.margins.right}%`;
+        container.style.marginLeft = `${result.settings.margins.left}%`;
+
         for (const columnConfig of config.columns) {
             console.log(columnConfig);
             const newColumn = buildColumn(columnConfig);
@@ -81,9 +92,13 @@ const buildColumn = (column) => {
     const newColumn = document.createElement("div");
     newColumn.classList += " column";
 
-    newColumn.appendChild(buildHeader(column.name));
-    const links = buildLinkList(column.links);
-    newColumn.appendChild(links);
+    let sectionNum = 0;
+    for (const section of column.sections) {
+        newColumn.appendChild(buildHeader(section.name));
+        const links = buildLinkList(section.links);
+        newColumn.appendChild(links);
+        sectionNum++;
+    }
 
     return newColumn;
 };
@@ -107,9 +122,9 @@ const buildLink = (link) => {
     const a = document.createElement("a");
     const li = document.createElement("li");
 
+    const i = document.createElement("i");
+    i.classList += "nf";
     if (link.hasOwnProperty("icon")) {
-        const i = document.createElement("i");
-        i.classList += " nf";
         i.classList += ` ${link.icon}`;
 
         let iconColor = colors.brightWhite;
@@ -121,8 +136,8 @@ const buildLink = (link) => {
             iconColor = colors[link["icon-color"]];
         }
         i.style.color = iconColor;
-        li.appendChild(i);
     }
+    li.appendChild(i);
 
     li.appendChild(a);
 
