@@ -39,7 +39,19 @@ const example = {
     ],
 };
 
-const mandatoryColors = ["background", "settingsButton", "settingsButtonHover", "link", "sectionName"];
+const mandatoryColors = [
+    "background",
+    "settingsButton",
+    "settingsButtonHover",
+    "link",
+    "sectionName",
+    "searchBackground",
+    "searchBorder",
+    "searchText",
+    "searchLink",
+    "searchSelection",
+    "searchInputBackground",
+];
 
 const defaultColors = {
     background: "#1F1F28",
@@ -47,6 +59,12 @@ const defaultColors = {
     settingsButtonHover: "#7E9CD8",
     link: "#DCD7BA",
     sectionName: "#DCD7BA",
+    searchBackground: "#1F1F28",
+    searchBorder: "#DCD7BA",
+    searchText: "#DCD7BA",
+    searchLink: "#DCD7BA",
+    searchSelection: "#EEEBD920",
+    searchInputBackground: "#1F1F28",
     black: "#090618",
     blue: "#7E9CD8",
     cyan: "#6A9589",
@@ -65,19 +83,20 @@ const defaultColors = {
     brightYellow: "#E6C384",
 };
 
-const formatJson = (string) => JSON.stringify(JSON.parse(string), null, 2);
+const formatJson = (string) => (string ? JSON.stringify(JSON.parse(string), null, 2) : null);
 
 document.addEventListener("DOMContentLoaded", () => {
     chrome.storage.local.get(["settings"], (result) => {
         document.getElementById("config").value =
-            formatJson(result.settings.config) || JSON.stringify(example, null, 2);
+            formatJson(result.settings?.config) || JSON.stringify(example, null, 2);
 
         document.getElementById("colors").value =
-            formatJson(result.settings.colors) || JSON.stringify(defaultColors, null, 2);
+            formatJson(result.settings?.colors) || JSON.stringify(defaultColors, null, 2);
 
         document.getElementById("marginTop").value = result.settings.margins.top || 0;
         document.getElementById("marginLeft").value = result.settings.margins.left || 0;
         document.getElementById("marginRight").value = result.settings.margins.right || 0;
+        document.getElementById("searchSections").checked = result.settings.searchSections || false;
     });
 });
 
@@ -111,6 +130,8 @@ document.getElementById("saveBtn").addEventListener("click", () => {
             document.getElementById("missingColorsError").textContent =
                 `Missing mandatory colors: ${missingMandatoryColors.join(", ")}`;
             document.getElementById("missingColorsError").style.display = "block";
+        } else {
+            document.getElementById("missingColorsError").style.display = "none";
         }
     }
 
@@ -129,6 +150,7 @@ document.getElementById("saveBtn").addEventListener("click", () => {
                         left: marginLeft,
                         right: marginRight,
                     },
+                    searchSections: document.getElementById("searchSections").checked,
                 },
             },
             () => {
